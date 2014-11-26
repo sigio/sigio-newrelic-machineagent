@@ -14,7 +14,7 @@ common: &default_settings
   # You must specify the license key associated with your New Relic
   # account.  This key binds your Agent's data to your account in the
   # New Relic service.
-  license_key: '{{newrelic-licensekey}}'
+  license_key: '{{newrelic_licensekey}}'
 
   # Agent Enabled
   # Use this setting to disable the agent instead of removing it from the startup command.
@@ -29,7 +29,7 @@ common: &default_settings
   # For example, to report data to "My Application" and "My Application 2" use this:
   # app_name: My Application;My Application 2
   # This setting is required.
-  app_name: {{ newrelic-appname }}
+  app_name: {{ newrelic_appname }}
   
   # To enable high security, set this property to true. When in high
   # security mode, the agent will use SSL and obfuscated SQL. Additionally,
@@ -42,7 +42,7 @@ common: &default_settings
   # This provides a finer-grained performance breakdown for
   # web apps in New Relic.
   # Default is false.
-  enable_auto_app_naming: {{newrelic-autoappnaming }}
+  enable_auto_app_naming: {{newrelic_autoappnaming }}
 
   # Set to true to enable component-based transaction naming.
   # Set to false to use the URI of a web request as the name of the transaction.

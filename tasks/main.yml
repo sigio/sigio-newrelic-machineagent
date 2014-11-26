@@ -23,16 +23,16 @@
     - newrelic-repo
     - newrelic-agent
   notify: reload-newrelic
-  when: newrelic-install-sysmond == true
+  when: newrelic_install_sysmond == "true"
 
 - name: Set license key
-  lineinfile: dest=/etc/newrelic/nrsysmond.cfg line="license_key={{newrelic-licensekey}}" regexp="^license_key=" owner=root group=newrelic mode=0640
+  lineinfile: dest=/etc/newrelic/nrsysmond.cfg line="license_key={{newrelic_licensekey}}" regexp="^license_key=" owner=root group=newrelic mode=0640
   tags:
     - newrelic
     - newrelic-agent
     - newrelic-license
   notify: reload-newrelic
-  when: newrelic-install-sysmond == true
+  when: newrelic_install_sysmond == true
 
 - name: Enable/Start newrelic agent
   service: name={{item}} state=started enabled=yes
@@ -41,10 +41,10 @@
   tags:
     - newrelic
     - newrelic-agent
-  when: newrelic-install-sysmond == true
+  when: newrelic_install_sysmond == true
 
 - name: Install NewRelic Java Agent
-  copy: dest={{newrelic-javaagent-path}}/{{item}} src=newrelic/{{item}} owner=newrelic group=newrelic mode=0644
+  copy: dest={{newrelic_javaagent_path}}/{{item}} src=newrelic/{{item}} owner=newrelic group=newrelic mode=0644
   with_items:
     - CHANGELOG
     - LICENSE
@@ -55,14 +55,14 @@
     - newrelic.jar
     - nrcerts
     - README.txt
-  when: newrelic-install-javaagent: == true
+  when: newrelic_install_javaagent == true
   tags:
     - newrelic
     - newrelic-java
 
 - name: Template NewRelic Java agent configuration
-  template: src=newrelic.yml.j2 dest={{newrelic-javaagent-path}}/newrelic.yml owner=newrelic group=newrelic mode=0644
-  when: newrelic-install-javaagent: == true
+  template: src=newrelic.yml.j2 dest={{newrelic_javaagent_path}}/newrelic.yml owner=newrelic group=newrelic mode=0644
+  when: newrelic_install_javaagent == true
   tags:
     - newrelic
     - newrelic-java
