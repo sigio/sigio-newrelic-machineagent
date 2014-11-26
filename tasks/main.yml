@@ -32,7 +32,7 @@
     - newrelic-agent
     - newrelic-license
   notify: reload-newrelic
-  when: newrelic_install_sysmond == true
+  when: newrelic_install_sysmond == "true"
 
 - name: Enable/Start newrelic agent
   service: name={{item}} state=started enabled=yes
@@ -41,7 +41,7 @@
   tags:
     - newrelic
     - newrelic-agent
-  when: newrelic_install_sysmond == true
+  when: newrelic_install_sysmond == "true"
 
 - name: Install NewRelic Java Agent
   copy: dest={{newrelic_javaagent_path}}/{{item}} src=newrelic/{{item}} owner=newrelic group=newrelic mode=0644
@@ -55,14 +55,14 @@
     - newrelic.jar
     - nrcerts
     - README.txt
-  when: newrelic_install_javaagent == true
+  when: newrelic_install_javaagent == "true"
   tags:
     - newrelic
     - newrelic-java
 
 - name: Template NewRelic Java agent configuration
   template: src=newrelic.yml.j2 dest={{newrelic_javaagent_path}}/newrelic.yml owner=newrelic group=newrelic mode=0644
-  when: newrelic_install_javaagent == true
+  when: newrelic_install_javaagent == "true"
   tags:
     - newrelic
     - newrelic-java
