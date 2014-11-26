@@ -1,2 +1,9 @@
 ---
 # vars file for sigio-newrelic-machineagent
+
+#newrelic-licensekey: 
+newrelic-install-sysmond: true
+newrelic-install-javaagent: true
+newrelic-javaagent-path: /opt/newrelic/
+newrelic-appname: NewRelic AppName
+newrelic-autoappnaming: false

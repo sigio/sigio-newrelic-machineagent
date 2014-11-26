@@ -1,11 +1,12 @@
 Role Name
 =========
 
-A brief description of the role goes here.
+Install the NewRelic system and java agent
 
 Requirements
 ------------
 
+A NewRelic license key, to be configured in a host_var or group_var, or in this role. A copy of the (licensed) newrelic java agent, unzipped in files/newrelic
 Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
 
 Role Variables

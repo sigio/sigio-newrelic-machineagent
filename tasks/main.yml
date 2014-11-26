@@ -1,2 +1,69 @@
 ---
 # tasks file for sigio-newrelic-machineagent
+# Currently only CentOS/RHEL 5/6/7
+
+- name: NewRelic Yum Repository GPG-Key
+  copy: src=RPM-GPG-KEY-NewRelic dest=/etc/pki/rpm-gpg/RPM-GPG-KEY-NewRelic owner=root group=root mode=0644
+  tags:
+    - newrelic
+    - newrelic-repo
+
+- name: NewRelic Yum Repository repofile
+  copy: src=newrelic.repo dest=/etc/yum.repos.d/newrelic.repo owner=root group=root mode=0644
+  tags:
+    - newrelic
+    - newrelic-repo
+
+- name: Install/Update newrelic-sysmond
+  yum: name={{item}} state=latest enablerepo=newrelic
+  with_items:
+    - newrelic-sysmond
+  tags:
+    - newrelic
+    - newrelic-repo
+    - newrelic-agent
+  notify: reload-newrelic
+  when: newrelic-install-sysmond == true
+
+- name: Set license key
+  lineinfile: dest=/etc/newrelic/nrsysmond.cfg line="license_key={{newrelic-licensekey}}" regexp="^license_key=" owner=root group=newrelic mode=0640
+  tags:
+    - newrelic
+    - newrelic-agent
+    - newrelic-license
+  notify: reload-newrelic
+  when: newrelic-install-sysmond == true
+
+- name: Enable/Start newrelic agent
+  service: name={{item}} state=started enabled=yes
+  with_items:
+    - newrelic-sysmond
+  tags:
+    - newrelic
+    - newrelic-agent
+  when: newrelic-install-sysmond == true
+
+- name: Install NewRelic Java Agent
+  copy: dest={{newrelic-javaagent-path}}/{{item}} src=newrelic/{{item}} owner=newrelic group=newrelic mode=0644
+  with_items:
+    - CHANGELOG
+    - LICENSE
+    - extension-example.xml
+    - extension.xsd
+    - newrelic-api.jar
+    - newrelic-api-sources.jar
+    - newrelic.jar
+    - nrcerts
+    - README.txt
+  when: newrelic-install-javaagent: == true
+  tags:
+    - newrelic
+    - newrelic-java
+
+- name: Template NewRelic Java agent configuration
+  template: src=newrelic.yml.j2 dest={{newrelic-javaagent-path}}/newrelic.yml owner=newrelic group=newrelic mode=0644
+  when: newrelic-install-javaagent: == true
+  tags:
+    - newrelic
+    - newrelic-java
+

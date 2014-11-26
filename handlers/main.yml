@@ -1,2 +1,7 @@
 ---
 # handlers file for sigio-newrelic-machineagent
+
+- name: reload-newrelic
+  service: name={{item}} state=restarted
+  with_items:
+    - newrelic-sysmond
