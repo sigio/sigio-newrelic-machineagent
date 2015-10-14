@@ -25,6 +25,9 @@ Example Playbook
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
     - hosts: servers
+      vars:
+        newrelic_install_sysmond: true
+        newrelic_install_javaagent: true
       roles:
          - { role: username.rolename, x: 42 }
 
