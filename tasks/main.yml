@@ -9,7 +9,7 @@
     - newrelic-repo
 
 - name: NewRelic Yum Repository repofile
-  copy: src=newrelic.repo dest=/etc/yum.repos.d/newrelic.repo owner=root group=root mode=0644
+  template: src=newrelic.repo dest=/etc/yum.repos.d/newrelic.repo owner=root group=root mode=0644
   tags:
     - newrelic
     - newrelic-repo
