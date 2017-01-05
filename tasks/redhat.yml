@@ -1,0 +1,25 @@
+---
+# RedHat/CentOS tasks file for sigio-newrelic-machineagent
+
+- name: NewRelic Yum Repository GPG-Key
+  copy: src=RPM-GPG-KEY-NewRelic dest=/etc/pki/rpm-gpg/RPM-GPG-KEY-NewRelic owner=root group=root mode=0644
+  tags:
+    - newrelic
+    - newrelic-repo
+
+- name: NewRelic Yum Repository repofile
+  copy: src=newrelic.repo dest=/etc/yum.repos.d/newrelic.repo owner=root group=root mode=0644
+  tags:
+    - newrelic
+    - newrelic-repo
+
+- name: Install/Update newrelic-sysmond
+  yum: name={{item}} state=latest enablerepo=newrelic
+  with_items:
+    - newrelic-sysmond
+  when: newrelic_install_sysmond|bool
+  tags:
+    - newrelic
+    - newrelic-repo
+    - newrelic-agent
+  notify: reload-newrelic

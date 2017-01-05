@@ -2,28 +2,11 @@
 # tasks file for sigio-newrelic-machineagent
 # Currently only CentOS/RHEL 5/6/7
 
-- name: NewRelic Yum Repository GPG-Key
-  copy: src=RPM-GPG-KEY-NewRelic dest=/etc/pki/rpm-gpg/RPM-GPG-KEY-NewRelic owner=root group=root mode=0644
-  tags:
-    - newrelic
-    - newrelic-repo
+- include: redhat.yml
+  when: ansible_os_family == "RedHat"
 
-- name: NewRelic Yum Repository repofile
-  copy: src=newrelic.repo dest=/etc/yum.repos.d/newrelic.repo owner=root group=root mode=0644
-  tags:
-    - newrelic
-    - newrelic-repo
-
-- name: Install/Update newrelic-sysmond
-  yum: name={{item}} state=latest enablerepo=newrelic
-  with_items:
-    - newrelic-sysmond
-  when: newrelic_install_sysmond|bool
-  tags:
-    - newrelic
-    - newrelic-repo
-    - newrelic-agent
-  notify: reload-newrelic
+- include: coreos.yml
+  when: ansible_os_family == "CoreOS"
 
 - name: Set license key
   lineinfile: dest=/etc/newrelic/nrsysmond.cfg line="license_key={{newrelic_licensekey}}" regexp="^license_key=" owner=root group=newrelic mode=0640

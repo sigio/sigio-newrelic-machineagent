@@ -3,7 +3,9 @@
 
 #newrelic_licensekey: 
 newrelic_install_sysmond: "true"
-newrelic_install_javaagent: "true"
-#newrelic_javaagent_path: "/opt/newrelic/"
+newrelic_install_javaagent: "false"
+#newrelic_javaagent_path: "{{newrelic_home}}"
 #newrelic_appname: "NewRelic AppName"
 #newrelic_autoappnaming: "false"
+
+newrelic_version: "2.3.0.132"

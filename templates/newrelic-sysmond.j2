@@ -1,0 +1,16 @@
+# {{ ansible_managed }}
+
+[Unit]
+Description=NewRelic service
+After=network-online.target
+
+[Service]
+ExecStart={{newrelic_home}}/nrsysmond -c {{newrelic_etc}}/nrsysmond.cfg -f
+WorkingDirectory=/
+User={{newrelic_user}}
+Group={{newrelic_group}}
+PrivateTmp=true
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target
