@@ -13,7 +13,7 @@
   when: newrelic_docker|bool
 
 - name: Create misc directories
-  file: state=directory path="{{item}}" owner="{{newrelic_user}}" group="{{newrelic_group}}" mode=0600
+  file: state=directory path="{{item}}" owner="{{newrelic_user}}" group="{{newrelic_group}}" mode=0700
   with_items:
     - "{{newrelic_etc}}"
     - "{{newrelic_log}}"
