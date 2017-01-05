@@ -8,6 +8,10 @@
 - name: Create NewRelic user
   user: name="{{newrelic_user}}" group="{{newrelic_group}}" comment="New Relic monitoring daemon" state=present system=yes home="{{newrelic_home}}" shell=/sbin/nologin
 
+- name: Add newrelic to docker group
+  user: name="{{newrelic_user}}" groups="docker" append=yes
+  when: newrelic_docker|bool
+
 - name: Create misc directories
   file: state=directory path="{{item}}" owner="{{newrelic_user}}" group="{{newrelic_group}}" mode=0600
   with_items:

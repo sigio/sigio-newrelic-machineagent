@@ -8,6 +8,9 @@ newrelic_home: "/opt/newrelic"
 newrelic_etc: "/etc/newrelic"
 newrelic_log: "/var/log/newrelic"
 
+# Docker integration
+newrelic_docker: false
+
 newrelic_version: "2.3.0.132"
 newrelic_download_path: "https://download.newrelic.com/server_monitor/release"
 newrelic_download_file: "newrelic-sysmond-{{newrelic_version}}-linux.tar.gz"
