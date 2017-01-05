@@ -1,0 +1,12 @@
+# {{ ansible_managed }}
+
+{{newrelic_log}}/nrsysmond.log {
+    rotate 7
+    daily
+    missingok
+    notifempty
+    sharedscripts
+    copytruncate
+    compress
+}
+
