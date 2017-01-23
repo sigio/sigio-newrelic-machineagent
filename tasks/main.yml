@@ -8,8 +8,8 @@
 - include: coreos.yml
   when: ansible_os_family == "CoreOS"
 
-- name: Set license key
-  lineinfile: dest=/etc/newrelic/nrsysmond.cfg line="license_key={{newrelic_licensekey}}" regexp="^license_key=" owner=root group=newrelic mode=0640
+- name: Template nrsysmond.cfg
+  template: src=nrsysmond.cfg.j2 dest=/etc/newrelic/nrsysmond.cfg owner=root group=newrelic mode=0640
   when: newrelic_install_sysmond|bool
   tags:
     - newrelic
